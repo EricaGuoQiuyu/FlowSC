@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -O3 -g -Wall -march=native -pthread -rdynamic CMakeFiles/GraphConverter.out.dir/GraphConverter.cpp.o -o GraphConverter.out  -Wl,-rpath,/home/qiuyug/Filter/SubgraphMatching/build/graph:/home/qiuyug/Filter/SubgraphMatching/build/utility ../graph/libgraph.so ../utility/libutility.so 
