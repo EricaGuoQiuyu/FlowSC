@@ -16,7 +16,7 @@ def _collate_(samples):
 def main_counting():
     #dataset_name_list = ['yeast', 'human', 'hprd', 'wordnet', 'dblp', 'eu2005', 'youtube', 'patents']
     dataset_name = 'wordnet' #args.dataset_name
-    query_size = 20 #args.query_size
+    query_size = 4 #args.query_size
 
     device = torch.device('cuda:7' if torch.cuda.is_available() else 'cpu')
     batch_query_num = args.batch_query_num
@@ -161,8 +161,8 @@ def main_counting():
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('--root_path', type=str, help='path to all datasets', default='/data/qiuyug/matching_data/dataset_splited/')
-    argparser.add_argument('--groundtruth_path', type=str, help='path to groundtruth folder', default='/data/qiuyug/matching_data/split_gt/')
+    argparser.add_argument('--root_path', type=str, help='path to all datasets', default='dataset/')
+    argparser.add_argument('--groundtruth_path', type=str, help='path to groundtruth folder', default='groundtruth/')
     argparser.add_argument('--batch_query_num', type=int, help='batch size', default=10)
     argparser.add_argument('--dataset_name', type=str, help='dataset name', default='yeast')
     argparser.add_argument('--query_size', type=int, help='query graph size', default=4)
