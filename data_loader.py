@@ -91,7 +91,7 @@ class Graph_Pairs(Dataset):
                 output_q_info, output_g_info = self.finder.cpp_GQL()
                 g_info.append(output_g_info)
                 q_info.append(output_q_info)
-                c_info.append(self.groundtruth_dict[query_file])
+                c_info.append(self.groundtruth_dict[os.path.basename(query_file)])
                 n_info.append(query_file)
 
                 self.flag = 1 
@@ -101,7 +101,7 @@ class Graph_Pairs(Dataset):
                 output_q_info, output_g_info = self.finder.cpp_GQL()
                 g_info.append(output_g_info)
                 q_info.append(output_q_info)
-                c_info.append(self.groundtruth_dict[query_file])
+                c_info.append(self.groundtruth_dict[os.path.basename(query_file)])
                 n_info.append(query_file)
         
         return g_info, q_info, c_info, n_info

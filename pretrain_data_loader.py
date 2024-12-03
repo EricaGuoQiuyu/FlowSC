@@ -6,18 +6,18 @@ import os
 from utils import Find_Candidates
 
 class Graph_Pairs(Dataset):
-    def __init__(self, dataset_name_list, root_path, groundtruth_path, batch_query_num):
+    def __init__(self, dataset_name_list, root_path, pretrain_groundtruth_path, batch_query_num):
         super(Graph_Pairs, self).__init__()
 
         self.dataset_name_list = dataset_name_list
         self.root_path = root_path
-        self.groundtruth_path = groundtruth_path
+        self.pretrain_groundtruth_path = pretrain_groundtruth_path
         self.batch_query_num = batch_query_num
 
         self.query_data_pairs = [] 
         self.groundtruth_dict = {}
         for dataset_name in dataset_name_list:
-            with open(os.path.join(groundtruth_path, f"{dataset_name}.txt"), 'r') as file:
+            with open(os.path.join(pretrain_groundtruth_path, f"{dataset_name}.txt"), 'r') as file:
                 for line in file:
                     log_file, embedding_value = line.strip().split(': ')
                     self.groundtruth_dict[log_file] = float(embedding_value)
@@ -53,7 +53,9 @@ class Graph_Pairs(Dataset):
             
             g_info.append(output_g_info)
             q_info.append(output_q_info)
-            c_info.append(self.groundtruth_dict[os.path.abspath(query_graph_path)])
+
+            relative_path = os.path.relpath(os.path.abspath(query_graph_path), self.root_path)
+            c_info.append(self.groundtruth_dict[relative_path])
             n_info.append(query_graph_path)
 
         return g_info, q_info, c_info, n_info
