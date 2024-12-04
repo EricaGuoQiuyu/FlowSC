@@ -93,7 +93,7 @@ class Find_Candidates:
 
     def cpp_GQL(self):
         encoding = 'utf-8'
-        base_command = ['filter/build1/matching/SubgraphMatching.out', '-d', self.data_graph_file, '-q', self.query_graph_file, '-filter', 'GQL']
+        base_command = ['filter/build1/matching/SubgraphMatching.out', '-d', self.data_graph_file, '-q', self.query_graph_file, '-filter', 'GQL'] #the filter used here is not `GQL` but `BipartitePlus`. Please do not modify the `-filter GQL` setting.
         output = subprocess.run(base_command, capture_output=True)
         baseline_visit = output.stdout.decode(encoding).split('\n')
 

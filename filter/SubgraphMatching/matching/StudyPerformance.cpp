@@ -23,6 +23,7 @@ int main(int argc, char** argv) {
     std::string input_query_graph_file = command.getQueryGraphFilePath();
     std::string input_data_graph_file = command.getDataGraphFilePath();
     std::string input_filter_type = command.getFilterType();
+    input_filter_type = "GQL";
 
     auto all_start = std::chrono::high_resolution_clock::now();
 

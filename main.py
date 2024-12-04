@@ -164,7 +164,7 @@ if __name__ == '__main__':
     argparser.add_argument('--root_path', type=str, help='path to all datasets', default='dataset/')
     argparser.add_argument('--groundtruth_path', type=str, help='path to groundtruth folder', default='groundtruth/')
     argparser.add_argument('--batch_query_num', type=int, help='batch size', default=10)
-    argparser.add_argument('--dataset_name', type=str, help='dataset name', default='yeast')
+    argparser.add_argument('--dataset_name', type=str, help='dataset name', default='wordnet')
     argparser.add_argument('--query_size', type=int, help='query graph size', default=4)
     args = argparser.parse_args()
     main_counting()
