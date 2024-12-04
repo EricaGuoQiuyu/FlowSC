@@ -22,7 +22,7 @@ We provide the WordNet dataset, its groundtruth, and the model's initialization 
 
 ## Filtering Test
 
-In the `filter` folder, `build1` provides the BipartitePlus filter used in our paper, which has been complied and is ready for direct use. The `SubgraphMatching` folder contains the source code of BipartitePlus, developed based on [https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master](SubgraphMatching). We have  commented out the activation and termination conditions of Bipartite, and set the first iteration of refinement to use `GQL`, with the remaining refinements using BipattitePlus for a total of 5 refinement rounds. This setup makes it convenient for you to independently test the filtering performance of BipartitePlus. You can easily adjust the activation and termination conditions of BipartitePlus as needed. To compile SubgraphMatching:
+In the `filter` folder, `build1` provides the BipartitePlus filter used in our paper, which has been complied and is ready for direct use. The `SubgraphMatching` folder contains the source code of BipartitePlus, developed based on [SubgraphMatching](https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master). We have  commented out the activation and termination conditions of Bipartite, and set the first iteration of refinement to use `GQL`, with the remaining refinements using BipattitePlus for a total of 5 refinement rounds. This setup makes it convenient for you to independently test the filtering performance of BipartitePlus. You can easily adjust the activation and termination conditions of BipartitePlus as needed. To compile SubgraphMatching:
 
 ```
 cd filter/SubgraphMatching
@@ -39,7 +39,7 @@ cd filter/SubgraphMatching/build/matching
 
 ```
 
-You can use `filtering_test.py` to reproduce the filtering experiments in our paper. Since filtering tests do not require groundtruth, the filtering experiments use the complete datasets from [https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master](SubgraphMatching), with each dataset containing 1,800 query graphs. Update `datasets_path` to point to your datasets path.
+You can use `filtering_test.py` to reproduce the filtering experiments in our paper. Since filtering tests do not require groundtruth, the filtering experiments use the complete datasets from [SubgraphMatching](https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master), with each dataset containing 1,800 query graphs. Update `datasets_path` to point to your datasets path.
 
 ## Pretrain
 
@@ -53,4 +53,4 @@ to generate your own initialization parameters. We do not recommend directly usi
 
 ## Datasets
 
-The datasets used in our paper is from [https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master](SubgraphMatching). The exact count for each query graph is generated using the recommended method in [https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master](SubgraphMatching).
+The datasets used in our paper is from [SubgraphMatching](https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master). The exact count for each query graph is generated using the recommended method in [SubgraphMatching](https://github.com/RapidsAtHKUST/SubgraphMatching/tree/master).
