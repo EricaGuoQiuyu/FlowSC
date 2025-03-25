@@ -460,10 +460,11 @@ FilterVertices::verifyExactTwigIso_Plus(const Graph *data_graph, const Graph *qu
                              
                             if (candidate_neighbors.find({query_vertex_neighbor, data_vertex_neighbor}) != candidate_neighbors.end() 
                                     && candidate_neighbors[{query_vertex_neighbor, data_vertex_neighbor}].find(g_cycle_neighbor) != candidate_neighbors[{query_vertex_neighbor, data_vertex_neighbor}].end()
+                                    && candidate_neighbors[{query_vertex, data_vertex}].find(g_cycle_neighbor) != candidate_neighbors[{query_vertex, data_vertex}].end()
                                     && valid_candidates[q_cycle_neighbor][g_cycle_neighbor]) { 
                                 
                                 q_cycle_neighbor_check = true;
-                                break; //one data triangle is enough for a single uery triangle
+                                break; //one data triangle is enough for a single query triangle
                             }
                             else {
                                 continue;
