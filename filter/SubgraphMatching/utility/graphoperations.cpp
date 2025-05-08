@@ -197,21 +197,18 @@ void GraphOperations::bfsTraversal(const Graph *graph, VertexID root_vertex, Tre
         ui u_nbrs_count;
         const VertexID* u_nbrs = graph->getVertexNeighbors(u, u_nbrs_count);
 
-        // 创建一个临时数组保存未访问邻居的度数信息
         std::vector<std::pair<VertexID, ui>> unvisited_neighbors;
         for (ui i = 0; i < u_nbrs_count; ++i) {
             VertexID u_nbr = u_nbrs[i];
             if (!visited[u_nbr]) {
-                // 获取每个未访问邻居的度数，并将其与邻居ID一起存储
                 ui u_nbr_degree = graph->getVertexDegree(u_nbr);
                 unvisited_neighbors.emplace_back(u_nbr, u_nbr_degree);
             }
         }
 
-        // 按邻居的度数从大到小排序
         std::sort(unvisited_neighbors.begin(), unvisited_neighbors.end(),
                   [](const std::pair<VertexID, ui> &a, const std::pair<VertexID, ui> &b) {
-                      return a.second > b.second; // 按度数从大到小排序
+                      return a.second > b.second; 
                   });
 
         for (const auto &neighbor : unvisited_neighbors) {

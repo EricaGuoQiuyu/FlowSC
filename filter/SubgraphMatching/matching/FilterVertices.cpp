@@ -253,9 +253,6 @@ FilterVertices::GQLFilter(const Graph *data_graph, const Graph *query_graph, ui 
             }  
       
         }
-        else {
-            std::cout << "something wrong" <<std::endl;
-        }
         
     }
 

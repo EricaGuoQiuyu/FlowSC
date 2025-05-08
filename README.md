@@ -1,4 +1,5 @@
 # FlowSC
+Efficient and Accurate Subgraph Counting: A Bottom-up Flow-learning based Approach [VLDB 2025]
 
 ## Dependencies
 
