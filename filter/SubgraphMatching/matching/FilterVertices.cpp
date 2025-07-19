@@ -362,6 +362,7 @@ FilterVertices::verifyExactTwigIso(const Graph *data_graph, const Graph *query_g
     const VertexID* data_vertex_neighbors = data_graph->getVertexNeighbors(data_vertex, right_partition_size);
 
     std::unordered_set<VertexID> current_candidate_neighbors; 
+    current_candidate_neighbors.reserve(right_partition_size);
 
     ui edge_count = 0;
 
@@ -393,7 +394,8 @@ FilterVertices::verifyExactTwigIso(const Graph *data_graph, const Graph *query_g
         }
     }
 
-    candidate_neighbors[{query_vertex, data_vertex}] = current_candidate_neighbors;
+    candidate_neighbors[{query_vertex, data_vertex}] = std::move(current_candidate_neighbors);
+    
     return true;
 }
 
@@ -411,34 +413,16 @@ FilterVertices::verifyExactTwigIso_Plus(const Graph *data_graph, const Graph *qu
     const VertexID* data_vertex_neighbors = data_graph->getVertexNeighbors(data_vertex, right_partition_size);
 
     std::unordered_set<VertexID> current_candidate_neighbors; 
+    current_candidate_neighbors.reserve(right_partition_size);
 
     ui edge_count = 0;
-    std::unordered_map<VertexID, std::unordered_set<VertexID>> q_neighbor_to_g_neighbors;
-
-    for (int i = 0; i < left_partition_size; ++i) {
-        VertexID query_vertex_neighbor = query_vertex_neighbors[i];
-        for (int j = 0; j < right_partition_size; ++j) {
-            VertexID data_vertex_neighbor = data_vertex_neighbors[j];
-            if (valid_candidates[query_vertex_neighbor][data_vertex_neighbor]) {
-                q_neighbor_to_g_neighbors[query_vertex_neighbor].insert(data_vertex_neighbor);
-            }
-        }
-
-    }
-
     bool is_valid = true;
-    for (int i = 0; i < left_partition_size; ++i) {
+    for (ui i = 0; i < left_partition_size; ++i) {
         VertexID query_vertex_neighbor = query_vertex_neighbors[i];
         left_to_right_offset[i] = edge_count;
 
-        if (q_neighbor_to_g_neighbors[query_vertex_neighbor].empty()) {
-            //query_vertex_neighbor cannot match a data_vertex_neighbor
-            is_valid = false;
-            break;
-        }
-
         bool any_valid_data_vertex_neighbor = false;
-        for (int j = 0; j < right_partition_size; ++j) {
+        for (ui j = 0; j < right_partition_size; ++j) {
             VertexID data_vertex_neighbor = data_vertex_neighbors[j];
 
             bool data_vertex_neighbor_all_cycle_check = false;
@@ -448,12 +432,16 @@ FilterVertices::verifyExactTwigIso_Plus(const Graph *data_graph, const Graph *qu
                 std::unordered_set<VertexID> query_cycle_neighbors;
                 if (!NT_neighbors[{query_vertex, query_vertex_neighbor}].empty()){ //need triangle matching check
 
-                    query_cycle_neighbors = NT_neighbors[{query_vertex, query_vertex_neighbor}];
+                    const auto& query_cycle_neighbors = NT_neighbors[{query_vertex, query_vertex_neighbor}];
                     
                     bool q_cycle_neighbor_check; 
                     for (const auto& q_cycle_neighbor : query_cycle_neighbors) {  
                         q_cycle_neighbor_check = false;
-                        for (auto& g_cycle_neighbor : q_neighbor_to_g_neighbors[q_cycle_neighbor]) {
+                        for (ui k = 0; k < right_partition_size; ++k) {
+                            VertexID g_cycle_neighbor = data_vertex_neighbors[k];
+                            if (!valid_candidates[q_cycle_neighbor][g_cycle_neighbor]) {
+                                continue;
+                            }
                              
                             if (candidate_neighbors.find({query_vertex_neighbor, data_vertex_neighbor}) != candidate_neighbors.end() 
                                     && candidate_neighbors[{query_vertex_neighbor, data_vertex_neighbor}].find(g_cycle_neighbor) != candidate_neighbors[{query_vertex_neighbor, data_vertex_neighbor}].end()
@@ -463,18 +451,12 @@ FilterVertices::verifyExactTwigIso_Plus(const Graph *data_graph, const Graph *qu
                                 q_cycle_neighbor_check = true;
                                 break; //one data triangle is enough for a single query triangle
                             }
-                            else {
-                                continue;
-                            }
 
                         }
 
                         if (!q_cycle_neighbor_check){
                             data_vertex_neighbor_all_cycle_check = false;
                             break; 
-                        }
-                        else {
-                            continue;
                         }
                         
                     }
@@ -514,7 +496,7 @@ FilterVertices::verifyExactTwigIso_Plus(const Graph *data_graph, const Graph *qu
         }
     }
 
-    candidate_neighbors[{query_vertex, data_vertex}] = current_candidate_neighbors;
+    candidate_neighbors[{query_vertex, data_vertex}] = std::move(current_candidate_neighbors);
     return true;
 }
 
